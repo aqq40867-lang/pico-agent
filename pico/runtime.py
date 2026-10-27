@@ -27,6 +27,9 @@ from . import tools as toolkit
 from .workspace import IGNORED_PATH_NAMES, MAX_HISTORY, WorkspaceContext, clip, now
 
 DEFAULT_SHELL_ENV_ALLOWLIST = ("HOME", "LANG", "LC_ALL", "LC_CTYPE", "LOGNAME", "PATH", "PWD", "SHELL", "TERM", "TMPDIR", "TMP", "TEMP", "USER")
+if os.name == "nt":
+    # Windows 下子进程缺了这些变量，python/pytest 等会直接启动失败
+    DEFAULT_SHELL_ENV_ALLOWLIST += ("SYSTEMROOT", "WINDIR", "COMSPEC", "PATHEXT", "USERNAME", "USERPROFILE", "APPDATA", "LOCALAPPDATA", "PROGRAMDATA")
 DEFAULT_FEATURE_FLAGS = {
     "memory": True,
     "relevant_memory": True,
